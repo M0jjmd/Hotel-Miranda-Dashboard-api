@@ -1,0 +1,7 @@
+{
+    "watch": [
+        "node-rooms-csv"
+    ],
+    "ext": "ts",
+    "exec": "ts-node node-rooms-csv/index.ts"
+}

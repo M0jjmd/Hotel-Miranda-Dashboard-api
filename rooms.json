@@ -1,0 +1,490 @@
+{
+    "rooms": [
+        {
+            "Photo": "https://example.com/images/room2.jpg",
+            "RoomNumber": 102,
+            "RoomID": "R002",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 15000,
+            "OfferPrice": 20,
+            "Status": "Booked",
+            "id": "2fd4"
+        },
+        {
+            "Photo": "https://example.com/images/room3.jpg",
+            "RoomNumber": 103,
+            "RoomID": "R003",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 10000,
+            "OfferPrice": 10,
+            "Status": "Available",
+            "id": "04fc"
+        },
+        {
+            "Photo": "https://example.com/images/room4.jpg",
+            "RoomNumber": 104,
+            "RoomID": "R004",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning",
+                "Mini Bar",
+                "Balcony"
+            ],
+            "Rate": 18000,
+            "OfferPrice": 12,
+            "Status": "Booked",
+            "id": "40c0"
+        },
+        {
+            "Photo": "https://example.com/images/room5.jpg",
+            "RoomNumber": 105,
+            "RoomID": "R005",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning"
+            ],
+            "Rate": 22000,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "6544"
+        },
+        {
+            "Photo": "https://example.com/images/room6.jpg",
+            "RoomNumber": 106,
+            "RoomID": "R006",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 14000,
+            "OfferPrice": 16,
+            "Status": "Booked",
+            "id": "1fe8"
+        },
+        {
+            "Photo": "https://example.com/images/room7.jpg",
+            "RoomNumber": 107,
+            "RoomID": "R007",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 9000,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "aec6"
+        },
+        {
+            "Photo": "https://example.com/images/room8.jpg",
+            "RoomNumber": 108,
+            "RoomID": "R008",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning",
+                "Mini Bar",
+                "Balcony"
+            ],
+            "Rate": 25000,
+            "OfferPrice": 15,
+            "Status": "Booked",
+            "id": "2a61"
+        },
+        {
+            "Photo": "https://example.com/images/room9.jpg",
+            "RoomNumber": 109,
+            "RoomID": "R009",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 16000,
+            "OfferPrice": 14,
+            "Status": "Available",
+            "id": "ffca"
+        },
+        {
+            "Photo": "https://example.com/images/room10.jpg",
+            "RoomNumber": 110,
+            "RoomID": "R010",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning"
+            ],
+            "Rate": 13000,
+            "OfferPrice": 17,
+            "Status": "Available",
+            "id": "2731"
+        },
+        {
+            "Photo": "https://example.com/images/room11.jpg",
+            "RoomNumber": 1235,
+            "RoomID": "R011",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 8500,
+            "OfferPrice": 12.5,
+            "Status": "Booked",
+            "id": "dc6a"
+        },
+        {
+            "Photo": "https://example.com/images/room12.jpg",
+            "RoomNumber": 112,
+            "RoomID": "R012",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning",
+                "Mini Bar",
+                "Balcony"
+            ],
+            "Rate": 23000,
+            "OfferPrice": 27,
+            "Status": "Available",
+            "id": "7889"
+        },
+        {
+            "Photo": "https://example.com/images/room13.jpg",
+            "RoomNumber": 113,
+            "RoomID": "R013",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 17005,
+            "OfferPrice": 27,
+            "Status": "Booked",
+            "id": "5167"
+        },
+        {
+            "Photo": "https://example.com/images/room14.jpg",
+            "RoomNumber": 114,
+            "RoomID": "R014",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning"
+            ],
+            "Rate": 12005,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "e622"
+        },
+        {
+            "Photo": "https://example.com/images/room15.jpg",
+            "RoomNumber": 115,
+            "RoomID": "R015",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 9500,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "7c2b"
+        },
+        {
+            "Photo": "https://example.com/images/room16.jpg",
+            "RoomNumber": 116,
+            "RoomID": "R016",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning"
+            ],
+            "Rate": 24000,
+            "OfferPrice": 26,
+            "Status": "Booked",
+            "id": "2d82"
+        },
+        {
+            "Photo": "https://example.com/images/room17.jpg",
+            "RoomNumber": 117,
+            "RoomID": "R017",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning",
+                "Balcony"
+            ],
+            "Rate": 18005,
+            "OfferPrice": 16,
+            "Status": "Available",
+            "id": "9891"
+        },
+        {
+            "Photo": "https://example.com/images/room18.jpg",
+            "RoomNumber": 118,
+            "RoomID": "R018",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 14005,
+            "OfferPrice": 20,
+            "Status": "Available",
+            "id": "7afa"
+        },
+        {
+            "Photo": "https://example.com/images/room19.jpg",
+            "RoomNumber": 119,
+            "RoomID": "R019",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 9000,
+            "OfferPrice": 12,
+            "Status": "Booked",
+            "id": "9bc7"
+        },
+        {
+            "Photo": "https://example.com/images/room20.jpg",
+            "RoomNumber": 120,
+            "RoomID": "R020",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning",
+                "Mini Bar",
+                "Balcony"
+            ],
+            "Rate": 25005,
+            "OfferPrice": 29,
+            "Status": "Available",
+            "id": "f221"
+        },
+        {
+            "Photo": "https://example.com/images/room21.jpg",
+            "RoomNumber": 121,
+            "RoomID": "R021",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 17000,
+            "OfferPrice": 23,
+            "Status": "Booked",
+            "id": "4a2d"
+        },
+        {
+            "Photo": "https://example.com/images/room22.jpg",
+            "RoomNumber": 122,
+            "RoomID": "R022",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 13005,
+            "OfferPrice": 21,
+            "Status": "Available",
+            "id": "60e4"
+        },
+        {
+            "Photo": "https://example.com/images/room23.jpg",
+            "RoomNumber": 123,
+            "RoomID": "R023",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 10000,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "3485"
+        },
+        {
+            "Photo": "https://example.com/images/room24.jpg",
+            "RoomNumber": 124,
+            "RoomID": "R024",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning",
+                "Balcony"
+            ],
+            "Rate": 24005,
+            "OfferPrice": 12,
+            "Status": "Booked",
+            "id": "db3e"
+        },
+        {
+            "Photo": "https://example.com/images/room25.jpg",
+            "RoomNumber": 125,
+            "RoomID": "R025",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 18000,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "bd71"
+        },
+        {
+            "Photo": "https://example.com/images/room26.jpg",
+            "RoomNumber": 126,
+            "RoomID": "R026",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Air Conditioning"
+            ],
+            "Rate": 14000,
+            "OfferPrice": 26,
+            "Status": "Booked",
+            "id": "e0d0"
+        },
+        {
+            "Photo": "https://example.com/images/room27.jpg",
+            "RoomNumber": 127,
+            "RoomID": "R027",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV"
+            ],
+            "Rate": 9500,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "d4c7"
+        },
+        {
+            "Photo": "https://example.com/images/room28.jpg",
+            "RoomNumber": 128,
+            "RoomID": "R028",
+            "BedType": "Suite",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Air Conditioning"
+            ],
+            "Rate": 25000,
+            "OfferPrice": 25,
+            "Status": "Booked",
+            "id": "d664"
+        },
+        {
+            "Photo": "https://example.com/images/room29.jpg",
+            "RoomNumber": 129,
+            "RoomID": "R029",
+            "BedType": "Double Superior",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar",
+                "Balcony"
+            ],
+            "Rate": 19000,
+            "OfferPrice": 12,
+            "Status": "Available",
+            "id": "997c"
+        },
+        {
+            "Photo": "https://example.com/images/room30.jpg",
+            "RoomNumber": 130,
+            "RoomID": "R030",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "Wi-Fi",
+                "TV",
+                "Mini Bar"
+            ],
+            "Rate": 14005,
+            "OfferPrice": 12,
+            "Status": "Booked",
+            "id": "98fb"
+        },
+        {
+            "id": "5222",
+            "Photo": "blob:http://localhost:5173/2299bde4-1832-47b0-91d6-0ccd2b2614a2",
+            "RoomNumber": 123,
+            "RoomID": "R6513",
+            "BedType": "Double Bed",
+            "Facilities": [
+                "TV",
+                "Sea View",
+                "WiFi"
+            ],
+            "Rate": 12003,
+            "OfferPrice": 12,
+            "Status": "Not Available"
+        },
+        {
+            "id": "8531",
+            "Photo": "blob:http://localhost:5173/2299bde4-1832-47b0-91d6-0ccd2b2614a2",
+            "RoomNumber": 435,
+            "RoomID": "R5207",
+            "BedType": "Family Room",
+            "Facilities": [
+                "TV"
+            ],
+            "Rate": 10000,
+            "OfferPrice": 20,
+            "Status": "Booked"
+        },
+        {
+            "id": "4172",
+            "Photo": "",
+            "RoomNumber": 6,
+            "RoomID": "R9656",
+            "BedType": "Single Bed",
+            "Facilities": [
+                "Bathtub"
+            ],
+            "Rate": 10000,
+            "OfferPrice": 10,
+            "Status": "Available"
+        }
+    ]
+}
