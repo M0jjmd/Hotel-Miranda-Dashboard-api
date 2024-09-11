@@ -10,7 +10,10 @@ export class UserService {
 
     getById(id: string): UserInterface | null {
         const user = users.find((userData: UserInterface) => userData.id === id);
-        return user || null;
+        if (!user) {
+            throw new Error(`User with id ${id} not found`);
+        }
+        return user
     }
 
     create(newUser: UserInterface): UserInterface {
@@ -18,21 +21,20 @@ export class UserService {
         return newUser;
     }
 
-    update(id: string, updatedUser: UserInterface): UserInterface | null {
+    update(id: string, updatedUser: UserInterface): UserInterface {
         const userIndex = users.findIndex((user) => user.id === id);
         if (userIndex !== -1) {
             users[userIndex] = updatedUser
-            return users[userIndex];
+            return users[userIndex]
         }
-        return null;
+        return users[userIndex]
     }
 
-    delete(id: string): boolean {
+    delete(id: string): void {
         const userIndex = users.findIndex((user) => user.id === id);
-        if (userIndex !== -1) {
-            users.splice(userIndex, 1)
-            return true;
+        if (userIndex === -1) {
+            throw new Error(`User with id:${id} not found`)
         }
-        return false;
+        users.splice(userIndex, 1)
     }
 }

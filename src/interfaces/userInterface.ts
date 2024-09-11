@@ -11,3 +11,7 @@ export interface UserInterface {
     State: string
     position: string
 }
+
+export interface JwtPayload {
+    username: string
+}
