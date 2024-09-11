@@ -1,8 +1,11 @@
 import { Request, Response, Router } from 'express'
 import { ContactService } from '../services/contactService'
 import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
+import { authenticateTokenMiddleware } from '../middleware/auth'
 
 export const contactsController = Router()
+
+contactsController.use(authenticateTokenMiddleware)
 
 contactsController.get("", async (req: Request, res: Response) => {
     const contactService = new ContactService()
@@ -23,23 +26,6 @@ contactsController.post("", async (req: Request, res: Response) => {
         return res.status(201).send({ data: createdContact })
     } catch (error) {
         return res.status(500).send({ error: "Error creating the contact" })
-    }
-})
-
-contactsController.put("/:id", async (req: Request<{ id: string }, {}, ContactInterface>, res: Response) => {
-    const contactService = new ContactService()
-    const contactId = req.params.id
-    const updatedContactData: ContactInterface = req.body
-
-    try {
-        const updatedContact = await contactService.update(contactId, updatedContactData)
-        if (updatedContact) {
-            return res.status(200).send({ data: updatedContact })
-        } else {
-            return res.status(404).send({ message: "Contact not found" })
-        }
-    } catch (error) {
-        return res.status(500).send({ error: "Error updating the contact" })
     }
 })
 

@@ -8,9 +8,12 @@ export class ContactService {
         return contacts
     }
 
-    getById(id: string): ContactInterface | null {
+    getById(id: string): ContactInterface {
         const contact = contacts.find((contactData: ContactInterface) => contactData.id === id)
-        return contact || null
+        if (!contact) {
+            throw new Error(`Contact with id${id} not found`)
+        }
+        return contact
     }
 
     create(newContact: ContactInterface): ContactInterface {
@@ -18,22 +21,13 @@ export class ContactService {
         return newContact
     }
 
-    update(id: string, updatedContact: ContactInterface): ContactInterface | null {
-        const contactIndex = contacts.findIndex((contact) => contact.id === id)
-        if (contactIndex !== -1) {
-            contacts[contactIndex] = updatedContact
-            return contacts[contactIndex]
-        }
-        return null
-    }
-
-    updateArchiveStatus(payload: UpdateArchiveStatusPayload): ContactInterface | null {
+    updateArchiveStatus(payload: UpdateArchiveStatusPayload): ContactInterface {
         const contactIndex = contacts.findIndex((contact) => contact.id === payload.id)
         if (contactIndex !== -1) {
             contacts[contactIndex].actions.archive = payload.archiveStatus
             return contacts[contactIndex]
         }
-        return null
+        return contacts[contactIndex]
     }
 
     delete(id: string): boolean {
