@@ -8,31 +8,33 @@ export class RoomService {
         return rooms
     }
 
-    getById(id: string): RoomInterface | null {
-        const room = rooms.find((roomData: RoomInterface) => roomData.id === id);
-        return room || null;
+    getById(id: string): RoomInterface {
+        const room = rooms.find((roomData: RoomInterface) => roomData.id === id)
+        if (!room) {
+            throw new Error(`Room with id ${id} not found`)
+        }
+        return room
     }
 
     create(newRoom: RoomInterface): RoomInterface {
-        rooms.push(newRoom);
-        return newRoom;
+        rooms.push(newRoom)
+        return newRoom
     }
 
     update(id: string, updatedRoom: RoomInterface): RoomInterface | null {
-        const roomIndex = rooms.findIndex((room) => room.id === id);
+        const roomIndex = rooms.findIndex((room) => room.id === id)
         if (roomIndex !== -1) {
             rooms[roomIndex] = updatedRoom
-            return rooms[roomIndex];
+            return rooms[roomIndex]
         }
-        return null;
+        return rooms[roomIndex]
     }
 
-    delete(id: string): boolean {
-        const roomIndex = rooms.findIndex((room) => room.id === id);
-        if (roomIndex !== -1) {
-            rooms.splice(roomIndex, 1)
-            return true;
+    delete(id: string): void {
+        const roomIndex = rooms.findIndex((room) => room.id === id)
+        if (roomIndex === -1) {
+            throw new Error(`Room with id=${id} not found`)
         }
-        return false;
+        rooms.splice(roomIndex, 1)
     }
 }

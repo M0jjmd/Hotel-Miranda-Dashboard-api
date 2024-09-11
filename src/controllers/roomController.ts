@@ -51,13 +51,13 @@ roomsController.delete("/:id", async (req: Request<{ id: string }>, res: Respons
     const roomId = req.params.id
 
     try {
-        const isDeleted = await roomService.delete(roomId)
-        if (isDeleted) {
-            return res.status(200).send({ message: "Room deleted successfully" })
-        } else {
-            return res.status(404).send({ message: "Room not found" })
-        }
+        await roomService.delete(roomId)
+        return res.status(200).send({ message: "Room deleted successfully" })
     } catch (error) {
-        return res.status(500).send({ error: "Error deleting the room" })
+        if (error instanceof Error && error.message.includes('not found')) {
+            return res.status(404).send({ message: error.message })
+        } else {
+            return res.status(500).send({ error: "Error deleting the room" })
+        }
     }
 })
