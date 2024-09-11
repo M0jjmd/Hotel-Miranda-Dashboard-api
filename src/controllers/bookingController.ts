@@ -1,8 +1,11 @@
 import { Request, Response, Router } from 'express'
 import { BookingService } from '../services/bookingService'
 import { BookingInterface } from '../interfaces/bookingInterface'
+import { authenticateTokenMiddleware } from '../middleware/auth'
 
 export const bookingsController = Router()
+
+bookingsController.use(authenticateTokenMiddleware)
 
 bookingsController.get("", async (req: Request, res: Response) => {
     const bookingService = new BookingService()
@@ -48,13 +51,13 @@ bookingsController.delete("/:id", async (req: Request<{ id: string }>, res: Resp
     const bookingId = req.params.id
 
     try {
-        const isDeleted = await bookingService.delete(bookingId)
-        if (isDeleted) {
-            return res.status(200).send({ message: "Booking deleted successfully" })
-        } else {
-            return res.status(404).send({ message: "Booking not found" })
-        }
+        await bookingService.delete(bookingId)
+        return res.status(200).send({ message: "Booking deleted successfully" })
     } catch (error) {
-        return res.status(500).send({ error: "Error deleting the booking" })
+        if (error instanceof Error && error.message.includes('not found')) {
+            return res.status(404).send({ message: error.message })
+        } else {
+            return res.status(500).send({ error: "Error deleting the booking" })
+        }
     }
 })

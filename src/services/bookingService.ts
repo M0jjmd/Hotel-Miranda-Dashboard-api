@@ -8,9 +8,12 @@ export class BookingService {
         return bookings
     }
 
-    getById(id: string): BookingInterface | null {
+    getById(id: string): BookingInterface {
         const booking = bookings.find((bookingData: BookingInterface) => bookingData.id === id)
-        return booking || null
+        if (!booking) {
+            throw new Error(`Booking with id: ${id} not found`)
+        }
+        return booking
     }
 
     create(newBooking: BookingInterface): BookingInterface {
@@ -18,21 +21,20 @@ export class BookingService {
         return newBooking
     }
 
-    update(id: string, updatedBooking: BookingInterface): BookingInterface | null {
+    update(id: string, updatedBooking: BookingInterface): BookingInterface {
         const bookingIndex = bookings.findIndex((booking) => booking.id === id)
         if (bookingIndex !== -1) {
             bookings[bookingIndex] = updatedBooking
             return bookings[bookingIndex]
         }
-        return null
+        return bookings[bookingIndex]
     }
 
-    delete(id: string): boolean {
+    delete(id: string): void {
         const bookingIndex = bookings.findIndex((booking) => booking.id === id)
-        if (bookingIndex !== -1) {
-            bookings.splice(bookingIndex, 1)
-            return true
+        if (bookingIndex === -1) {
+            throw new Error(`Booking with id: ${id} not found`)
         }
-        return false
+        bookings.splice(bookingIndex, 1)
     }
 }
