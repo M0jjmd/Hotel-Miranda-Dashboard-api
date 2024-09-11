@@ -73,7 +73,6 @@ usersController.put("/:id", async (req: Request<{ id: string }, {}, UserInterfac
     }
 })
 
-
 usersController.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const userService = new UserService()
     const userId = req.params.id

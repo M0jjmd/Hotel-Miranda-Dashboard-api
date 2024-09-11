@@ -11,7 +11,7 @@ export class RoomService {
     getById(id: string): RoomInterface {
         const room = rooms.find((roomData: RoomInterface) => roomData.id === id)
         if (!room) {
-            throw new Error(`Room with id ${id} not found`)
+            throw new Error(`Room with id: ${id} not found`)
         }
         return room
     }
@@ -33,7 +33,7 @@ export class RoomService {
     delete(id: string): void {
         const roomIndex = rooms.findIndex((room) => room.id === id)
         if (roomIndex === -1) {
-            throw new Error(`Room with id=${id} not found`)
+            throw new Error(`Room with id: ${id} not found`)
         }
         rooms.splice(roomIndex, 1)
     }

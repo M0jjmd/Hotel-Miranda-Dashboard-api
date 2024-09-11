@@ -1,5 +1,4 @@
 import express from 'express'
-import { authenticateTokenMiddleware } from './src/middleware/auth'
 import { roomsController } from './src/controllers/roomController'
 import { bookingsController } from './src/controllers/bookingController'
 import { contactsController } from './src/controllers/contactController'
@@ -10,8 +9,8 @@ const app = express()
 app.use(express.json())
 
 app.use('/users', usersController)
-app.use('/rooms', authenticateTokenMiddleware, roomsController)
-app.use('/bookings', authenticateTokenMiddleware, bookingsController)
-app.use('/contacts', authenticateTokenMiddleware, contactsController)
+app.use('/rooms', roomsController)
+app.use('/bookings', bookingsController)
+app.use('/contacts', contactsController)
 
 export default app

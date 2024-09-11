@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express'
 
 declare module 'express-serve-static-core' {
     interface Request {
-        user?: JwtPayload;
+        user?: JwtPayload
     }
 }
 
@@ -17,10 +17,14 @@ export const authenticateTokenMiddleware = (req: Request, res: Response, next: N
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (token == null) return res.sendStatus(401);
+    if (token == null) {
+        return res.sendStatus(401)
+    }
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
-        if (err) return res.sendStatus(403);
+        if (err) {
+            return res.sendStatus(403)
+        }
         const payload = decoded as JwtPayload
         req.user = payload
 

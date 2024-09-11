@@ -48,7 +48,6 @@ roomsController.put("/:id", async (req: Request<{ id: string }, {}, RoomInterfac
     }
 })
 
-
 roomsController.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const roomService = new RoomService()
     const roomId = req.params.id

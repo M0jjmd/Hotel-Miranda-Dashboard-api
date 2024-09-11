@@ -11,7 +11,7 @@ export class ContactService {
     getById(id: string): ContactInterface {
         const contact = contacts.find((contactData: ContactInterface) => contactData.id === id)
         if (!contact) {
-            throw new Error(`Contact with id${id} not found`)
+            throw new Error(`Contact with id: ${id} not found`)
         }
         return contact
     }
@@ -30,12 +30,11 @@ export class ContactService {
         return contacts[contactIndex]
     }
 
-    delete(id: string): boolean {
+    delete(id: string): void {
         const contactIndex = contacts.findIndex((contact) => contact.id === id)
-        if (contactIndex !== -1) {
-            contacts.splice(contactIndex, 1)
-            return true
+        if (contactIndex === -1) {
+            throw new Error(`Contact with id: ${id} not found`)
         }
-        return false
+        contacts.splice(contactIndex, 1)
     }
 }
