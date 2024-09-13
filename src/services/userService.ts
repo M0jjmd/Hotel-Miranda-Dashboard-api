@@ -30,11 +30,12 @@ export class UserService {
         return users[userIndex]
     }
 
-    delete(id: string): void {
+    delete(id: string): boolean {
         const userIndex = users.findIndex((user) => user.id === id)
         if (userIndex === -1) {
-            throw new Error(`User with id: ${id} not found`)
+            return false
         }
         users.splice(userIndex, 1)
+        return true
     }
 }

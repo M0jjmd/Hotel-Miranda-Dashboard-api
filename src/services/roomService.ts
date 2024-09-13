@@ -30,11 +30,12 @@ export class RoomService {
         return rooms[roomIndex]
     }
 
-    delete(id: string): void {
+    delete(id: string): boolean {
         const roomIndex = rooms.findIndex((room) => room.id === id)
         if (roomIndex === -1) {
-            throw new Error(`Room with id: ${id} not found`)
+            return false
         }
         rooms.splice(roomIndex, 1)
+        return true
     }
 }

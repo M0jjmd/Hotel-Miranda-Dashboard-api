@@ -30,11 +30,12 @@ export class ContactService {
         return contacts[contactIndex]
     }
 
-    delete(id: string): void {
+    delete(id: string): boolean {
         const contactIndex = contacts.findIndex((contact) => contact.id === id)
         if (contactIndex === -1) {
-            throw new Error(`Contact with id: ${id} not found`)
+            return false
         }
         contacts.splice(contactIndex, 1)
+        return true
     }
 }

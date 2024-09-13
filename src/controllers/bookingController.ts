@@ -48,13 +48,14 @@ bookingsController.delete("/:id", async (req: Request<{ id: string }>, res: Resp
     const bookingId = req.params.id
 
     try {
-        await bookingService.delete(bookingId)
-        return res.status(200).send({ message: "Booking deleted successfully" })
-    } catch (error) {
-        if (error instanceof Error && error.message.includes('not found')) {
-            return res.status(404).send({ message: error.message })
+        const successfulDelete = await bookingService.delete(bookingId)
+        if (successfulDelete) {
+            return res.status(200).send({ message: "Booking deleted successfully" })
         } else {
-            return res.status(500).send({ error: "Error deleting the booking" })
+            return res.status(404).send({ message: "Booking not found" })
         }
+
+    } catch (error) {
+        return res.status(500).send({ error: "Error deleting the booking" })
     }
 })

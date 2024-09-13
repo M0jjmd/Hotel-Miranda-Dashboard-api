@@ -57,13 +57,14 @@ usersController.delete("/:id", async (req: Request<{ id: string }>, res: Respons
     const userId = req.params.id
 
     try {
-        await userService.delete(userId)
-        return res.status(200).send({ message: "User deleted successfully" })
-    } catch (error) {
-        if (error instanceof Error && error.message.includes('not found')) {
-            return res.status(404).send({ message: error.message })
+        const successfulDelete = await userService.delete(userId)
+        if (successfulDelete) {
+            return res.status(200).send({ message: "User deleted successfully" })
         } else {
-            return res.status(500).send({ error: "Error deleting the user" })
+            return res.status(404).send({ message: "User not found" })
         }
+
+    } catch (error) {
+        return res.status(500).send({ error: "Error deleting the user" })
     }
 })

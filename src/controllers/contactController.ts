@@ -47,13 +47,13 @@ contactsController.delete("/:id", async (req: Request<{ id: string }>, res: Resp
     const contactId = req.params.id
 
     try {
-        await contactService.delete(contactId)
-        return res.status(200).send({ message: "Contact deleted successfully" })
-    } catch (error) {
-        if (error instanceof Error && error.message.includes('not found')) {
-            return res.status(404).send({ message: error.message })
+        const successfulDelete = await contactService.delete(contactId)
+        if (successfulDelete) {
+            return res.status(200).send({ message: "Contact deleted successfully" })
         } else {
-            return res.status(500).send({ error: "Error deleting the contact" })
+            return res.status(404).send({ message: "Contact not found" })
         }
+    } catch (error) {
+        return res.status(500).send({ error: "Error deleting the contact" })
     }
 })

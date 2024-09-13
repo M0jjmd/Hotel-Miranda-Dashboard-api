@@ -30,11 +30,12 @@ export class BookingService {
         return bookings[bookingIndex]
     }
 
-    delete(id: string): void {
+    delete(id: string): boolean {
         const bookingIndex = bookings.findIndex((booking) => booking.id === id)
         if (bookingIndex === -1) {
-            throw new Error(`Booking with id: ${id} not found`)
+            return false
         }
         bookings.splice(bookingIndex, 1)
+        return true
     }
 }
