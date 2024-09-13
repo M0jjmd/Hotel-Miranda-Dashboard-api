@@ -1,11 +1,8 @@
 import { Request, Response, Router } from 'express'
 import { ContactService } from '../services/contactService'
 import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
-import { authenticateTokenMiddleware } from '../middleware/auth'
 
 export const contactsController = Router()
-
-contactsController.use(authenticateTokenMiddleware)
 
 contactsController.get("", async (req: Request, res: Response) => {
     const contactService = new ContactService()

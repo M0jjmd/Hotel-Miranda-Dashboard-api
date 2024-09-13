@@ -1,11 +1,8 @@
 import { Request, Response, Router } from 'express'
 import { RoomService } from '../services/roomService'
 import { RoomInterface } from '../interfaces/roomInterface'
-import { authenticateTokenMiddleware } from '../middleware/auth'
 
 export const roomsController = Router()
-
-roomsController.use(authenticateTokenMiddleware)
 
 roomsController.get("", async (req: Request, res: Response) => {
     const roomService = new RoomService()

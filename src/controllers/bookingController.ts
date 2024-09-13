@@ -1,11 +1,8 @@
 import { Request, Response, Router } from 'express'
 import { BookingService } from '../services/bookingService'
 import { BookingInterface } from '../interfaces/bookingInterface'
-import { authenticateTokenMiddleware } from '../middleware/auth'
 
 export const bookingsController = Router()
-
-bookingsController.use(authenticateTokenMiddleware)
 
 bookingsController.get("", async (req: Request, res: Response) => {
     const bookingService = new BookingService()

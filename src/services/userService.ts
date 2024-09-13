@@ -8,7 +8,7 @@ export class UserService {
         return users
     }
 
-    getById(id: string): UserInterface | null {
+    getById(id: string): UserInterface {
         const user = users.find((userData: UserInterface) => userData.id === id)
         if (!user) {
             throw new Error(`User with id: ${id} not found`)
