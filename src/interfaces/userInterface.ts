@@ -1,5 +1,4 @@
 export interface UserInterface {
-    id: string
     username: string
     FullName: string
     password?: string

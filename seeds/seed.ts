@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker'
 import { RoomInterface } from '../src/interfaces/roomInterface'
 import { BookingInterface } from '../src/interfaces/bookingInterface'
 import { UserInterface } from '../src/interfaces/userInterface'
+import User from '../src/models/user.model'
 import { ContactInterface } from '../src/interfaces/contactInterface'
 
 const uri = 'mongodb://localhost:27017'
@@ -71,10 +72,9 @@ async function seedBookings(db: any) {
 }
 
 async function seedUsers(db: any) {
-    const users: UserInterface[] = []
+    const users: UserInterface[] = [];
     for (let i = 0; i < 10; i++) {
         users.push({
-            id: faker.string.uuid(),
             username: faker.internet.userName(),
             FullName: faker.name.fullName(),
             password: faker.internet.password(),
@@ -85,9 +85,9 @@ async function seedUsers(db: any) {
             Phone: faker.phone.number(),
             State: faker.helpers.arrayElement(['active', 'inactive']),
             position: faker.helpers.arrayElement(['receptionist', 'manager', 'cleaner']),
-        })
+        });
     }
-    await db.collection('users').insertMany(users)
+    await User.insertMany(users);
 }
 
 async function seedContacts(db: any) {

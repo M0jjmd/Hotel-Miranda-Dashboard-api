@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { UserService } from '../services/userService'
 import { UserInterface } from '../interfaces/userInterface'
 import { createHash } from 'crypto'
+import { UserDocument } from '../models/user.model'
 
 export const usersController = express.Router()
 
@@ -20,7 +21,7 @@ usersController.get("/:id", async (req: Request<{ id: string }>, res: Response) 
 
 usersController.post("", async (req: Request, res: Response) => {
     const userService = new UserService()
-    const newUser: UserInterface = req.body
+    const newUser: Omit<UserDocument, '_id'> = req.body
 
     if (newUser.password) {
         const hashedPassword = createHash('sha256').update(newUser.password).digest('hex')
