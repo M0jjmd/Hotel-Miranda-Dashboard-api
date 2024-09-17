@@ -1,10 +1,9 @@
-import { Schema, Document, model } from 'mongoose'
+import { Schema, Document, model, models } from 'mongoose'
 import { ContactInterface } from '../interfaces/contactInterface'
 
 export interface ContactDocument extends Document, ContactInterface { }
 
 const ContactSchema: Schema<ContactDocument> = new Schema({
-    id: { type: String, required: true },
     date: { type: String, required: true },
     customer: {
         name: { type: String, required: true },
@@ -18,4 +17,5 @@ const ContactSchema: Schema<ContactDocument> = new Schema({
     }
 })
 
-export default model<ContactDocument>('Contact', ContactSchema)
+const Contact = models.Contact || model<ContactDocument>('Contact', ContactSchema)
+export default Contact

@@ -1,9 +1,6 @@
-import dataContacts from '../../apiData.json'
-import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
+import { UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
 import { ContactDocument } from '../models/contact.model'
 import Contact from '../models/contact.model'
-
-const contacts: ContactInterface[] = dataContacts.contacts
 
 export class ContactService {
     async getAll(): Promise<ContactDocument[]> {

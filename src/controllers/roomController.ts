@@ -7,13 +7,24 @@ export const roomsController = Router()
 
 roomsController.get("", async (req: Request, res: Response) => {
     const roomService = new RoomService()
-    return res.status(200).send({ data: roomService.getAll() })
+    try {
+        const rooms = await roomService.getAll()
+        return res.status(200).send({ data: rooms })
+    } catch (error) {
+        console.error('Error fetching rooms:', error)
+        return res.status(500).send({ error: 'Error fetching rooms' })
+    }
 })
 
 roomsController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const userService = new RoomService()
-    console.log(req.params)
-    return res.send({ data: userService.getById(req.params.id) })
+    try {
+        const room = await userService.getById(req.params.id)
+        return res.status(200).send({ data: room })
+    } catch (error) {
+        console.error('Error fetching room:', error)
+        return res.status(500).send({ error: 'Error fetching room' })
+    }
 
 })
 

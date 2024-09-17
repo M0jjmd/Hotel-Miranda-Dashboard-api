@@ -1,36 +1,34 @@
-import { MongoClient } from 'mongodb'
+import mongoose from 'mongoose'
+import connectDB from '../src/config/db'
 import { faker } from '@faker-js/faker'
 import { RoomInterface } from '../src/interfaces/roomInterface'
 import { BookingInterface } from '../src/interfaces/bookingInterface'
 import { UserInterface } from '../src/interfaces/userInterface'
-import User from '../src/models/user.model'
 import { ContactInterface } from '../src/interfaces/contactInterface'
-
-const uri = 'mongodb://localhost:27017'
-const client = new MongoClient(uri)
-
-const dbName = 'hotelMirandaDB'
+import User from '../src/models/user.model'
+import Booking from '../src/models/booking.model'
+import Contact from '../src/models/contact.model'
+import Room from '../src/models/room.model'
 
 async function seedDatabase() {
     try {
-        await client.connect()
+        await connectDB()
         console.log('Conectado a MongoDB')
-        const db = client.db(dbName)
 
-        await seedRooms(db)
-        await seedBookings(db)
-        await seedUsers(db)
-        await seedContacts(db)
+        await seedRooms()
+        await seedBookings()
+        await seedUsers()
+        await seedContacts()
 
         console.log('Datos ficticios añadidos exitosamente')
     } catch (error) {
         console.error('Error al añadir datos', error)
     } finally {
-        await client.close()
+        await mongoose.connection.close()
     }
 }
 
-async function seedRooms(db: any) {
+async function seedRooms() {
     const rooms: RoomInterface[] = []
     for (let i = 0; i < 10; i++) {
         rooms.push({
@@ -42,18 +40,17 @@ async function seedRooms(db: any) {
             Rate: faker.number.int({ min: 5000, max: 20000 }),
             OfferPrice: faker.number.int({ min: 0, max: 100 }),
             Status: faker.helpers.arrayElement(['available', 'booked', 'maintenance']),
-            id: faker.string.uuid(),
         })
     }
-    await db.collection('rooms').insertMany(rooms)
+    await Room.insertMany(rooms)
 }
 
-async function seedBookings(db: any) {
+async function seedBookings() {
     const bookings: BookingInterface[] = []
     for (let i = 0; i < 10; i++) {
         bookings.push({
             Guest: {
-                Name: faker.name.fullName(),
+                Name: faker.person.fullName(),
                 ReservationID: faker.string.uuid(),
             },
             OrderDate: faker.date.past().toISOString(),
@@ -65,18 +62,17 @@ async function seedBookings(db: any) {
                 RoomNumber: faker.number.int({ min: 100, max: 500 }).toString(),
             },
             Status: faker.helpers.arrayElement(['confirmed', 'cancelled', 'checked-in', 'checked-out']),
-            id: faker.string.uuid(),
         })
     }
-    await db.collection('bookings').insertMany(bookings)
+    await Booking.insertMany(bookings)
 }
 
-async function seedUsers(db: any) {
+async function seedUsers() {
     const users: UserInterface[] = [];
     for (let i = 0; i < 10; i++) {
         users.push({
             username: faker.internet.userName(),
-            FullName: faker.name.fullName(),
+            FullName: faker.person.fullName(),
             password: faker.internet.password(),
             Email: faker.internet.email(),
             Photo: faker.image.avatar(),
@@ -90,14 +86,13 @@ async function seedUsers(db: any) {
     await User.insertMany(users);
 }
 
-async function seedContacts(db: any) {
+async function seedContacts() {
     const contacts: ContactInterface[] = []
     for (let i = 0; i < 10; i++) {
         contacts.push({
-            id: faker.string.uuid(),
             date: faker.date.past().toISOString(),
             customer: {
-                name: faker.name.fullName(),
+                name: faker.person.fullName(),
                 email: faker.internet.email(),
                 phone: faker.phone.number(),
             },
@@ -106,10 +101,9 @@ async function seedContacts(db: any) {
             actions: {
                 archive: faker.datatype.boolean(),
             },
-
         })
     }
-    await db.collection('contact').insertMany(contacts)
+    await Contact.insertMany(contacts)
 }
 
 seedDatabase()

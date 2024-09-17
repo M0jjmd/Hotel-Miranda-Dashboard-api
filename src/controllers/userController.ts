@@ -9,14 +9,24 @@ export const usersController = express.Router()
 
 usersController.get("", async (req: Request, res: Response) => {
     const userService = new UserService()
-    return res.status(200).send({ data: userService.getAll() })
+    try {
+        const users = await userService.getAll()
+        return res.status(200).send({ data: users })
+    } catch (error) {
+        console.error('Error fetching users:', error)
+        return res.status(500).send({ error: 'Error fetching users' })
+    }
 })
 
 usersController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const userService = new UserService()
-    console.log(req.params)
-    return res.send({ data: userService.getById(req.params.id) })
-
+    try {
+        const user = await userService.getById(req.params.id)
+        return res.status(200).send({ data: user })
+    } catch (error) {
+        console.error('Error fetching user:', error)
+        return res.status(500).send({ error: 'Error fetching user' })
+    }
 })
 
 usersController.post("", async (req: Request, res: Response) => {

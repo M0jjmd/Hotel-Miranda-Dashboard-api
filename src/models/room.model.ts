@@ -1,9 +1,9 @@
-import { Schema, Document, model } from 'mongoose'
+import { Schema, Document, model, models } from 'mongoose'
 import { RoomInterface } from '../interfaces/roomInterface'
 
 export interface RoomDocument extends Document, RoomInterface { }
 
-const UserSchema: Schema<RoomDocument> = new Schema({
+const RoomSchema: Schema<RoomDocument> = new Schema({
     Photo: { type: String, required: true },
     RoomNumber: { type: Number, required: true },
     RoomID: { type: String, required: true },
@@ -14,4 +14,7 @@ const UserSchema: Schema<RoomDocument> = new Schema({
     Status: { type: String, required: true },
 })
 
-export default model<RoomDocument>('User', UserSchema)
+
+const Room = models.Room || model<RoomDocument>('Room', RoomSchema)
+export default Room
+// export default model<RoomDocument>('User', UserSchema)

@@ -1,5 +1,6 @@
 import { Schema, Document, model } from 'mongoose'
 import { BookingInterface } from '../interfaces/bookingInterface'
+import { models } from 'mongoose'
 
 export interface BookingDocument extends Document, BookingInterface { }
 
@@ -19,4 +20,6 @@ const BookingSchema: Schema<BookingDocument> = new Schema({
     Status: { type: String, required: true },
 })
 
-export default model<BookingDocument>('Booking', BookingSchema)
+const Booking = models.Booking || model<BookingDocument>('Booking', BookingSchema)
+export default Booking
+// export default model<BookingDocument>('Booking', BookingSchema)
