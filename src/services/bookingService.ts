@@ -1,41 +1,34 @@
-import dataBookings from '../../apiData.json'
-import { BookingInterface } from '../interfaces/bookingInterface'
-
-const bookings: BookingInterface[] = dataBookings.bookings
+import { BookingDocument } from '../models/booking.model'
+import Booking from '../models/booking.model'
 
 export class BookingService {
-    getAll(): BookingInterface[] {
-        return bookings
+    async getAll(): Promise<BookingDocument[]> {
+        return Booking.find().exec()
     }
 
-    getById(id: string): BookingInterface {
-        const booking = bookings.find((bookingData: BookingInterface) => bookingData.id === id)
+    async getById(id: string): Promise<BookingDocument> {
+        const booking = await Booking.findById(id).exec()
         if (!booking) {
-            throw new Error(`Booking with id: ${id} not found`)
+            throw new Error(`User with id: ${id} not found`)
         }
         return booking
     }
 
-    create(newBooking: BookingInterface): BookingInterface {
-        bookings.push(newBooking)
-        return newBooking
+    async create(newBooking: Omit<BookingDocument, '_id'>): Promise<BookingDocument> {
+        const booking = new Booking(newBooking)
+        return booking.save()
     }
 
-    update(id: string, updatedBooking: BookingInterface): BookingInterface {
-        const bookingIndex = bookings.findIndex((booking) => booking.id === id)
-        if (bookingIndex !== -1) {
-            bookings[bookingIndex] = updatedBooking
-            return bookings[bookingIndex]
+    async update(id: string, updatedBooking: Partial<Omit<BookingDocument, '_id'>>): Promise<BookingDocument> {
+        const booking = await Booking.findByIdAndUpdate(id, updatedBooking, { new: true }).exec()
+        if (!booking) {
+            throw new Error(`Room with id: ${id} not found`)
         }
-        return bookings[bookingIndex]
+        return booking
     }
 
-    delete(id: string): boolean {
-        const bookingIndex = bookings.findIndex((booking) => booking.id === id)
-        if (bookingIndex === -1) {
-            return false
-        }
-        bookings.splice(bookingIndex, 1)
-        return true
+    async delete(id: string): Promise<boolean> {
+        const result = await Booking.findByIdAndDelete(id).exec()
+        return result !== null
     }
 }

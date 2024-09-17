@@ -6,7 +6,6 @@ export interface BookingInterface {
     SpecialRequest: string
     RoomType: RoomType
     Status: string
-    id: string
 }
 
 export interface Guest {

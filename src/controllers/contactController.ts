@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express'
 import { ContactService } from '../services/contactService'
-import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
+import { UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
 import { ContactDocument } from '../models/contact.model'
 
 export const contactsController = Router()

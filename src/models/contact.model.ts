@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model } from 'mongoose'
+import { Schema, Document, model } from 'mongoose'
 import { ContactInterface } from '../interfaces/contactInterface'
 
 export interface ContactDocument extends Document, ContactInterface { }
