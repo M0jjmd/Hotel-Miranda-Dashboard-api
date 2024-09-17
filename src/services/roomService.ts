@@ -1,41 +1,34 @@
-import dataRooms from '../../apiData.json'
-import { RoomInterface } from '../interfaces/roomInterface'
-
-const rooms: RoomInterface[] = dataRooms.rooms
+import { RoomDocument } from '../models/room.model'
+import Room from '../models/room.model'
 
 export class RoomService {
-    getAll(): RoomInterface[] {
-        return rooms
+    async getAll(): Promise<RoomDocument[]> {
+        return Room.find().exec()
     }
 
-    getById(id: string): RoomInterface {
-        const room = rooms.find((roomData: RoomInterface) => roomData.id === id)
+    async getById(id: string): Promise<RoomDocument> {
+        const room = await Room.findById(id).exec()
+        if (!room) {
+            throw new Error(`User with id: ${id} not found`)
+        }
+        return room
+    }
+
+    async create(newUser: Omit<RoomDocument, '_id'>): Promise<RoomDocument> {
+        const room = new Room(newUser)
+        return room.save()
+    }
+
+    async update(id: string, updatedRoom: Partial<Omit<RoomDocument, '_id'>>): Promise<RoomDocument> {
+        const room = await Room.findByIdAndUpdate(id, updatedRoom, { new: true }).exec()
         if (!room) {
             throw new Error(`Room with id: ${id} not found`)
         }
         return room
     }
 
-    create(newRoom: RoomInterface): RoomInterface {
-        rooms.push(newRoom)
-        return newRoom
-    }
-
-    update(id: string, updatedRoom: RoomInterface): RoomInterface | null {
-        const roomIndex = rooms.findIndex((room) => room.id === id)
-        if (roomIndex !== -1) {
-            rooms[roomIndex] = updatedRoom
-            return rooms[roomIndex]
-        }
-        return rooms[roomIndex]
-    }
-
-    delete(id: string): boolean {
-        const roomIndex = rooms.findIndex((room) => room.id === id)
-        if (roomIndex === -1) {
-            return false
-        }
-        rooms.splice(roomIndex, 1)
-        return true
+    async delete(id: string): Promise<boolean> {
+        const result = await Room.findByIdAndDelete(id).exec()
+        return result !== null
     }
 }

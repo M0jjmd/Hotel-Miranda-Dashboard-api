@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { RoomService } from '../services/roomService'
 import { RoomInterface } from '../interfaces/roomInterface'
+import { RoomDocument } from '../models/room.model'
 
 export const roomsController = Router()
 
@@ -18,7 +19,7 @@ roomsController.get("/:id", async (req: Request<{ id: string }>, res: Response) 
 
 roomsController.post("", async (req: Request, res: Response) => {
     const roomService = new RoomService()
-    const newRoom: RoomInterface = req.body
+    const newRoom: Omit<RoomDocument, '_id'> = req.body
 
     try {
         const createdRoom = await roomService.create(newRoom)

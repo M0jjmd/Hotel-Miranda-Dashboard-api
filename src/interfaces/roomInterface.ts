@@ -7,5 +7,4 @@ export interface RoomInterface {
     Rate: number
     OfferPrice: number
     Status: string
-    id: string
 }

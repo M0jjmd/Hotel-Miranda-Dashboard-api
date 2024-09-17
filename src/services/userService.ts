@@ -1,5 +1,3 @@
-import dataUsers from '../../apiData.json'
-import { UserInterface } from '../interfaces/userInterface'
 import { UserDocument } from '../models/user.model'
 import User from '../models/user.model'
 
