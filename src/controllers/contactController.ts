@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
 import { ContactService } from '../services/contactService'
 import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
+import { ContactDocument } from '../models/contact.model'
 
 export const contactsController = Router()
 
@@ -16,7 +17,7 @@ contactsController.get("/:id", async (req: Request<{ id: string }>, res: Respons
 
 contactsController.post("", async (req: Request, res: Response) => {
     const contactService = new ContactService()
-    const newContact: ContactInterface = req.body
+    const newContact: Omit<ContactDocument, '_id'> = req.body
 
     try {
         const createdContact = await contactService.create(newContact)

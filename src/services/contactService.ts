@@ -1,41 +1,40 @@
 import dataContacts from '../../apiData.json'
 import { ContactInterface, UpdateArchiveStatusPayload } from '../interfaces/contactInterface'
+import { ContactDocument } from '../models/contact.model'
+import Contact from '../models/contact.model'
 
 const contacts: ContactInterface[] = dataContacts.contacts
 
 export class ContactService {
-    getAll(): ContactInterface[] {
-        return contacts
+    async getAll(): Promise<ContactDocument[]> {
+        return Contact.find().exec()
     }
 
-    getById(id: string): ContactInterface {
-        const contact = contacts.find((contactData: ContactInterface) => contactData.id === id)
+    async getById(id: string): Promise<ContactDocument> {
+        const contact = await Contact.findById(id).exec()
         if (!contact) {
             throw new Error(`Contact with id: ${id} not found`)
         }
         return contact
     }
 
-    create(newContact: ContactInterface): ContactInterface {
-        contacts.push(newContact)
-        return newContact
+    async create(newContact: Omit<ContactDocument, '_id'>): Promise<ContactDocument> {
+        const contact = new Contact(newContact)
+        return contact.save()
     }
 
-    updateArchiveStatus(payload: UpdateArchiveStatusPayload): ContactInterface {
-        const contactIndex = contacts.findIndex((contact) => contact.id === payload.id)
-        if (contactIndex !== -1) {
-            contacts[contactIndex].actions.archive = payload.archiveStatus
-            return contacts[contactIndex]
+    async updateArchiveStatus(payload: UpdateArchiveStatusPayload): Promise<ContactDocument> {
+        const { id, archiveStatus } = payload
+        const contact = await Contact.findById(id).exec()
+        if (!contact) {
+            throw new Error(`Contact with id: ${id} not found`)
         }
-        return contacts[contactIndex]
+        contact.actions.archive = archiveStatus
+        return contact.save()
     }
 
-    delete(id: string): boolean {
-        const contactIndex = contacts.findIndex((contact) => contact.id === id)
-        if (contactIndex === -1) {
-            return false
-        }
-        contacts.splice(contactIndex, 1)
-        return true
+    async delete(id: string): Promise<boolean> {
+        const result = await Contact.findByIdAndDelete(id).exec()
+        return result !== null
     }
 }
