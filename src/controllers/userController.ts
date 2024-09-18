@@ -2,8 +2,9 @@ import express from 'express'
 import { Request, Response } from 'express'
 import { UserService } from '../services/userService'
 import { UserInterface } from '../interfaces/userInterface'
-import { createHash } from 'crypto'
 import { UserDocument } from '../models/user.model'
+import { createHash } from 'crypto'
+import bcrypt from 'bcrypt'
 
 export const usersController = express.Router()
 
@@ -34,15 +35,20 @@ usersController.post("", async (req: Request, res: Response) => {
     const newUser: Omit<UserDocument, '_id'> = req.body
 
     if (newUser.password) {
-        const hashedPassword = createHash('sha256').update(newUser.password).digest('hex')
-        newUser.password = hashedPassword
-    }
+        try {
+            const saltRounds = 10
+            const hashedPassword = await bcrypt.hash(newUser.password, saltRounds)
+            newUser.password = hashedPassword
+        } catch (error) {
+            return res.status(500).send({ error: "Error hashing the password" })
+        }
 
-    try {
-        const createdUser = await userService.create(newUser)
-        return res.status(201).send({ data: createdUser })
-    } catch (error) {
-        return res.status(500).send({ error: "Error creating the user" })
+        try {
+            const createdUser = await userService.create(newUser)
+            return res.status(201).send({ data: createdUser })
+        } catch (error) {
+            return res.status(500).send({ error: "Error creating the user" })
+        }
     }
 })
 

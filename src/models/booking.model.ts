@@ -7,7 +7,7 @@ export interface BookingDocument extends Document, BookingInterface { }
 const BookingSchema: Schema<BookingDocument> = new Schema({
     Guest: {
         Name: { type: String, required: true },
-        ReservationID: { type: String, required: true }
+        RoomId: { type: String, required: true }
     },
     OrderDate: { type: String, required: true },
     CheckIn: { type: String, required: true },
@@ -22,4 +22,3 @@ const BookingSchema: Schema<BookingDocument> = new Schema({
 
 const Booking = models.Booking || model<BookingDocument>('Booking', BookingSchema)
 export default Booking
-// export default model<BookingDocument>('Booking', BookingSchema)

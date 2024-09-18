@@ -1,7 +1,9 @@
 import app from './app'
 import connectDB from './src/config/db'
+import dotenv from 'dotenv'
 
-const port = 8000
+dotenv.config()
+const port = process.env.PORT
 
 connectDB()
     .then(() => {

@@ -1,7 +1,6 @@
 export interface RoomInterface {
     Photo: string
     RoomNumber: number
-    RoomID: string
     BedType: string
     Facilities: string[]
     Rate: number

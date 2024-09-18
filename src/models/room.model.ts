@@ -6,7 +6,6 @@ export interface RoomDocument extends Document, RoomInterface { }
 const RoomSchema: Schema<RoomDocument> = new Schema({
     Photo: { type: String, required: true },
     RoomNumber: { type: Number, required: true },
-    RoomID: { type: String, required: true },
     BedType: { type: String, required: true },
     Facilities: { type: [String], required: true },
     Rate: { type: Number, required: true },
@@ -17,4 +16,3 @@ const RoomSchema: Schema<RoomDocument> = new Schema({
 
 const Room = models.Room || model<RoomDocument>('Room', RoomSchema)
 export default Room
-// export default model<RoomDocument>('User', UserSchema)

@@ -10,7 +10,7 @@ export interface BookingInterface {
 
 export interface Guest {
     Name: string
-    ReservationID: string
+    RoomId: string
 }
 
 export interface RoomType {
