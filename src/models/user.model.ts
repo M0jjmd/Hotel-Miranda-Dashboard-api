@@ -9,7 +9,7 @@ const UserSchema: Schema<UserDocument> = new Schema({
     password: { type: String },
     Email: { type: String, required: true, unique: true },
     Photo: { type: String, required: true },
-    EntryDate: { type: String, required: true },
+    EntryDate: { type: Date, required: true },
     PositionDescription: { type: String, required: true },
     Phone: { type: String, required: true },
     State: { type: String, required: true },

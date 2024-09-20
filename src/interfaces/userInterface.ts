@@ -4,7 +4,7 @@ export interface UserInterface {
     password?: string
     Email: string
     Photo: string
-    EntryDate: string
+    EntryDate: Date
     PositionDescription: string
     Phone: string
     State: string

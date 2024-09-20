@@ -1,5 +1,5 @@
 export interface ContactInterface {
-    date: string
+    date: Date
     customer: {
         userId?: string
         name: string

@@ -16,8 +16,8 @@ async function seedDatabase() {
         console.log('Conectado a MongoDB')
 
         await seedRooms()
-        await seedBookings()
         await seedUsers()
+        await seedBookings()
         await seedContacts()
 
         console.log('Datos ficticios añadidos exitosamente')
@@ -45,19 +45,40 @@ async function seedRooms(): Promise<RoomInterface[]> {
     return insertedRooms
 }
 
+async function seedUsers() {
+    const users: UserInterface[] = [];
+    for (let i = 0; i < 10; i++) {
+        users.push({
+            username: faker.internet.userName(),
+            FullName: faker.person.fullName(),
+            password: faker.internet.password(),
+            Email: faker.internet.email(),
+            Photo: faker.image.avatar(),
+            EntryDate: faker.date.past(),
+            PositionDescription: faker.lorem.sentence(),
+            Phone: faker.phone.number(),
+            State: faker.helpers.arrayElement(['active', 'inactive']),
+            position: faker.helpers.arrayElement(['receptionist', 'manager', 'cleaner']),
+        });
+    }
+    await User.insertMany(users);
+}
+
 async function seedBookings() {
     const rooms = await Room.find()
+    const users = await User.find()
     const bookings: BookingInterface[] = []
     for (let i = 0; i < 10; i++) {
         const randomRoom = faker.helpers.arrayElement(rooms)
+        const randomUser = faker.helpers.arrayElement(users)
         bookings.push({
             Guest: {
-                Name: faker.person.fullName(),
-                RoomId: randomRoom._id.toString(),
+                UserId: randomUser._id,
+                RoomId: randomRoom._id,
             },
-            OrderDate: faker.date.past().toISOString(),
-            CheckIn: faker.date.future().toISOString(),
-            CheckOut: faker.date.future().toISOString(),
+            OrderDate: faker.date.past(),
+            CheckIn: faker.date.future(),
+            CheckOut: faker.date.future(),
             SpecialRequest: faker.lorem.sentence(),
             RoomType: {
                 Type: faker.helpers.arrayElement(['Single', 'Double', 'Suite']),
@@ -69,37 +90,18 @@ async function seedBookings() {
     await Booking.insertMany(bookings)
 }
 
-async function seedUsers() {
-    const users: UserInterface[] = [];
-    for (let i = 0; i < 10; i++) {
-        users.push({
-            username: faker.internet.userName(),
-            FullName: faker.person.fullName(),
-            password: faker.internet.password(),
-            Email: faker.internet.email(),
-            Photo: faker.image.avatar(),
-            EntryDate: faker.date.past().toISOString(),
-            PositionDescription: faker.lorem.sentence(),
-            Phone: faker.phone.number(),
-            State: faker.helpers.arrayElement(['active', 'inactive']),
-            position: faker.helpers.arrayElement(['receptionist', 'manager', 'cleaner']),
-        });
-    }
-    await User.insertMany(users);
-}
-
 async function seedContacts() {
-    const users = await User.find({}).limit(10)
+    const users = await User.find()
     const contacts: ContactInterface[] = []
     for (let i = 0; i < 10; i++) {
-        const randomUser = users[Math.floor(Math.random() * users.length)]
+        const randomUser = faker.helpers.arrayElement(users)
         contacts.push({
-            date: faker.date.past().toISOString(),
+            date: faker.date.past(),
             customer: {
                 userId: randomUser._id,
-                name: faker.person.fullName(),
-                email: faker.internet.email(),
-                phone: faker.phone.number(),
+                name: randomUser.FullName,
+                email: randomUser.Email,
+                phone: randomUser.Phone,
             },
             subject: faker.lorem.sentence(),
             comment: faker.lorem.paragraph(),
