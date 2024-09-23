@@ -1,28 +1,41 @@
 import { Request, Response, Router } from 'express'
 import { BookingService } from '../services/bookingService'
 import { BookingInterface } from '../interfaces/bookingInterface'
+import { BookingDocument } from '../models/booking.model'
 
 export const bookingsController = Router()
 
 bookingsController.get("", async (req: Request, res: Response) => {
     const bookingService = new BookingService()
-    return res.status(200).send({ data: bookingService.getAll() })
+    try {
+        const bookings = await bookingService.getAll()
+        return res.status(200).send({ data: bookings })
+    } catch (error) {
+        console.error('Error fetching bookings:', error)
+        return res.status(500).send({ error: 'Error fetching bookings' })
+    }
 })
 
 bookingsController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const bookingService = new BookingService()
-    return res.send({ data: bookingService.getById(req.params.id) })
+    try {
+        const booking = await bookingService.getById(req.params.id)
+        return res.status(200).send({ data: booking })
+    } catch (error) {
+        console.error('Error fetching booking:', error)
+        return res.status(500).send({ error: 'Error fetching booking' })
+    }
 })
 
 bookingsController.post("", async (req: Request, res: Response) => {
     const bookingService = new BookingService()
-    const newBooking: BookingInterface = req.body
+    const newBooking: Omit<BookingDocument, '_id'> = req.body
 
     try {
         const createdBooking = await bookingService.create(newBooking)
         return res.status(201).send({ data: createdBooking })
     } catch (error) {
-        return res.status(500).send({ error: "Error creating the booking" })
+        return res.status(500).send({ error: "Error creating the room" })
     }
 })
 

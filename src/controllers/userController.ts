@@ -2,36 +2,53 @@ import express from 'express'
 import { Request, Response } from 'express'
 import { UserService } from '../services/userService'
 import { UserInterface } from '../interfaces/userInterface'
+import { UserDocument } from '../models/user.model'
 import { createHash } from 'crypto'
+import bcrypt from 'bcrypt'
 
 export const usersController = express.Router()
 
 usersController.get("", async (req: Request, res: Response) => {
     const userService = new UserService()
-    return res.status(200).send({ data: userService.getAll() })
+    try {
+        const users = await userService.getAll()
+        return res.status(200).send({ data: users })
+    } catch (error) {
+        console.error('Error fetching users:', error)
+        return res.status(500).send({ error: 'Error fetching users' })
+    }
 })
 
 usersController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
     const userService = new UserService()
-    console.log(req.params)
-    return res.send({ data: userService.getById(req.params.id) })
-
+    try {
+        const user = await userService.getById(req.params.id)
+        return res.status(200).send({ data: user })
+    } catch (error) {
+        console.error('Error fetching user:', error)
+        return res.status(500).send({ error: 'Error fetching user' })
+    }
 })
 
 usersController.post("", async (req: Request, res: Response) => {
     const userService = new UserService()
-    const newUser: UserInterface = req.body
+    const newUser: Omit<UserDocument, '_id'> = req.body
 
     if (newUser.password) {
-        const hashedPassword = createHash('sha256').update(newUser.password).digest('hex')
-        newUser.password = hashedPassword
-    }
+        try {
+            const saltRounds = 10
+            const hashedPassword = await bcrypt.hash(newUser.password, saltRounds)
+            newUser.password = hashedPassword
+        } catch (error) {
+            return res.status(500).send({ error: "Error hashing the password" })
+        }
 
-    try {
-        const createdUser = await userService.create(newUser)
-        return res.status(201).send({ data: createdUser })
-    } catch (error) {
-        return res.status(500).send({ error: "Error creating the user" })
+        try {
+            const createdUser = await userService.create(newUser)
+            return res.status(201).send({ data: createdUser })
+        } catch (error) {
+            return res.status(500).send({ error: "Error creating the user" })
+        }
     }
 })
 
