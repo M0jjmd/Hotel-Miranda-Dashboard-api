@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 import { faker } from '@faker-js/faker'
 import { RoomInterface } from '../src/interfaces/roomInterface'
 import { BookingInterface } from '../src/interfaces/bookingInterface'
@@ -46,7 +47,25 @@ async function seedRooms(): Promise<RoomInterface[]> {
 }
 
 async function seedUsers() {
-    const users: UserInterface[] = [];
+    const users: UserInterface[] = []
+
+    const saltRounds = 10
+    const password = 'miContraseñaSegura'
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+
+    users.push({
+        username: 'johndoe',
+        FullName: 'John Doe',
+        password: hashedPassword,
+        Email: 'johndoe@example.com',
+        Photo: faker.image.avatar(),
+        EntryDate: new Date(),
+        PositionDescription: 'Manager',
+        Phone: '1234567890',
+        State: 'active',
+        position: 'manager',
+    })
+
     for (let i = 0; i < 10; i++) {
         users.push({
             username: faker.internet.userName(),
