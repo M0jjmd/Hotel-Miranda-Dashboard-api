@@ -1,74 +1,84 @@
 import { Request, Response, Router } from 'express'
-import { RoomService } from '../services/roomService'
-import { RoomInterface } from '../interfaces/roomInterface'
-import { RoomDocument } from '../models/room.model'
+import { RoomServices } from '../services/roomServices'
+import { Facility, RoomInterface } from '../interfaces/roomInterface'
+import mysql from 'mysql2/promise'
 
-export const roomsController = Router()
+export const roomsController = (connection: mysql.Connection) => {
+    const roomController = Router()
 
-roomsController.get("", async (req: Request, res: Response) => {
-    const roomService = new RoomService()
-    try {
-        const rooms = await roomService.getAll()
-        return res.status(200).send({ data: rooms })
-    } catch (error) {
-        console.error('Error fetching rooms:', error)
-        return res.status(500).send({ error: 'Error fetching rooms' })
-    }
-})
+    const roomService = new RoomServices(connection)
 
-roomsController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
-    const userService = new RoomService()
-    try {
-        const room = await userService.getById(req.params.id)
-        return res.status(200).send({ data: room })
-    } catch (error) {
-        console.error('Error fetching room:', error)
-        return res.status(500).send({ error: 'Error fetching room' })
-    }
-
-})
-
-roomsController.post("", async (req: Request, res: Response) => {
-    const roomService = new RoomService()
-    const newRoom: Omit<RoomDocument, '_id'> = req.body
-
-    try {
-        const createdRoom = await roomService.create(newRoom)
-        return res.status(201).send({ data: createdRoom })
-    } catch (error) {
-        return res.status(500).send({ error: "Error creating the room" })
-    }
-})
-
-roomsController.put("/:id", async (req: Request<{ id: string }, {}, RoomInterface>, res: Response) => {
-    const roomService = new RoomService()
-    const roomId = req.params.id
-    const updatedRoomData: RoomInterface = req.body
-
-    try {
-        const updatedRoom = await roomService.update(roomId, updatedRoomData)
-        if (updatedRoom) {
-            return res.status(200).send({ data: updatedRoom })
-        } else {
-            return res.status(404).send({ message: "Room not found" })
+    roomController.get("", async (req: Request, res: Response) => {
+        try {
+            const rooms = await roomService.getAll()
+            return res.status(200).send(rooms)
+        } catch (error) {
+            console.log(error)
+            console.error('Error fetching rooms:', error)
+            return res.status(500).send({ error: 'Error fetching rooms' })
         }
-    } catch (error) {
-        return res.status(500).send({ error: "Error updating the room" })
-    }
-})
+    })
 
-roomsController.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
-    const roomService = new RoomService()
-    const roomId = req.params.id
-
-    try {
-        const successfulDelete = await roomService.delete(roomId)
-        if (successfulDelete) {
-            return res.status(200).send({ message: "Room deleted successfully" })
-        } else {
-            return res.status(404).send({ message: "Room not found" })
+    roomController.get("/:id", async (req: Request<{ id: number }>, res: Response) => {
+        try {
+            const room = await roomService.getById(req.params.id)
+            return res.status(200).send(room)
+        } catch (error) {
+            console.log(error)
+            console.error('Error fetching room:', error)
+            return res.status(500).send({ error: 'Error fetching room' })
         }
-    } catch (error) {
-        return res.status(500).send({ error: "Error deleting the room" })
-    }
-})
+
+    })
+
+    roomController.post("", async (req: Request, res: Response) => {
+        const newRoom: RoomInterface = req.body
+        const facilityIds: number[] = req.body.facilities
+
+        if (!facilityIds || facilityIds.length === 0) {
+            return res.status(400).send({ error: "Facilities are required." })
+        }
+
+        try {
+            const createdRoom = await roomService.create(newRoom, facilityIds)
+            return res.status(201).send(createdRoom)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({ error: "Error creating the room" + error })
+        }
+    })
+
+    roomController.put("/:id", async (req: Request<{ id: number }, {}, RoomInterface>, res: Response) => {
+        const roomId = req.params.id
+        const updatedRoomData: RoomInterface = req.body
+
+        try {
+            const updatedRoom = await roomService.update(roomId, updatedRoomData)
+            if (updatedRoom) {
+                return res.status(200).send(updatedRoom)
+            } else {
+                return res.status(404).send({ message: "Room not found" })
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({ error: "Error updating the room" })
+        }
+    })
+
+    roomController.delete("/:id", async (req: Request<{ id: number }>, res: Response) => {
+        const roomId = req.params.id
+
+        try {
+            const successfulDelete = await roomService.delete(roomId)
+            if (successfulDelete) {
+                return res.status(200).send({ message: "Room deleted successfully" })
+            } else {
+                return res.status(404).send({ message: "Room not found" })
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({ error: "Error deleting the room" })
+        }
+    })
+    return roomController
+}

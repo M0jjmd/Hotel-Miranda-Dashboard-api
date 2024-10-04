@@ -1,16 +1,9 @@
 export interface ContactInterface {
-    date: Date
-    customer: {
-        userId?: string
-        name: string
-        email: string
-        phone: string
-    };
+    id?: number
+    date: Date | string
     subject: string
     comment: string
-    actions: {
-        archive: boolean
-    }
+    archive: boolean
 }
 
 export interface UpdateArchiveStatusPayload {

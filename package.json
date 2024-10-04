@@ -5,6 +5,7 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node server.ts",
+    "seed": "tsx seeds/seed.ts",
     "build": "tsc",
     "deploy": "zip -r lambda.zip .",
     "dev": "nodemon --exec npx ts-node server.ts"
@@ -38,6 +39,7 @@
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.9.0",
-    "mongoose": "^8.6.3"
+    "mongoose": "^8.6.3",
+    "mysql2": "^3.11.3"
   }
 }

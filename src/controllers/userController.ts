@@ -1,87 +1,90 @@
-import express from 'express'
-import { Request, Response } from 'express'
-import { UserService } from '../services/userService'
+import { Request, Response, Router } from 'express'
+import { UserServices } from '../services/userServices'
 import { UserInterface } from '../interfaces/userInterface'
-import { UserDocument } from '../models/user.model'
-import { createHash } from 'crypto'
 import bcrypt from 'bcrypt'
+import mysql from 'mysql2/promise'
 
-export const usersController = express.Router()
+export const usersController = (connection: mysql.Connection) => {
+    const userController = Router()
 
-usersController.get("", async (req: Request, res: Response) => {
-    const userService = new UserService()
-    try {
-        const users = await userService.getAll()
-        return res.status(200).send({ data: users })
-    } catch (error) {
-        console.error('Error fetching users:', error)
-        return res.status(500).send({ error: 'Error fetching users' })
-    }
-})
+    const userService = new UserServices(connection)
 
-usersController.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
-    const userService = new UserService()
-    try {
-        const user = await userService.getById(req.params.id)
-        return res.status(200).send({ data: user })
-    } catch (error) {
-        console.error('Error fetching user:', error)
-        return res.status(500).send({ error: 'Error fetching user' })
-    }
-})
-
-usersController.post("", async (req: Request, res: Response) => {
-    const userService = new UserService()
-    const newUser: Omit<UserDocument, '_id'> = req.body
-
-    if (newUser.password) {
+    userController.get("", async (req: Request, res: Response) => {
         try {
-            const saltRounds = 10
-            const hashedPassword = await bcrypt.hash(newUser.password, saltRounds)
-            newUser.password = hashedPassword
+            const users = await userService.getAll()
+            return res.status(200).send(users)
         } catch (error) {
-            return res.status(500).send({ error: "Error hashing the password" })
+            console.log(error)
+            console.error('Error fetching users:', error)
+            return res.status(500).send({ error: 'Error fetching users' })
         }
+    })
+
+    userController.get("/:id", async (req: Request<{ id: number }>, res: Response) => {
+        try {
+            const user = await userService.getById(req.params.id)
+            return res.status(200).send(user)
+        } catch (error) {
+            console.log(error)
+            console.error('Error fetching user:', error)
+            return res.status(500).send({ error: 'Error fetching user' })
+        }
+    })
+
+    userController.post("", async (req: Request, res: Response) => {
+        const newUser: UserInterface = req.body
+
+        if (newUser.password) {
+            try {
+                const saltRounds = 10
+                const hashedPassword = await bcrypt.hash(newUser.password, saltRounds)
+                newUser.password = hashedPassword
+            } catch (error) {
+                return res.status(500).send({ error: "Error hashing the password" })
+            }
+
+            try {
+                const createdUser = await userService.create(newUser)
+                return res.status(201).send(createdUser)
+            } catch (error) {
+                console.log(error)
+                return res.status(500).send({ error: "Error creating the user" })
+            }
+        }
+    })
+
+    userController.put("/:id", async (req: Request<{ id: number }, {}, UserInterface>, res: Response) => {
+        const userId = req.params.id
+        const updatedUserData: UserInterface = req.body
 
         try {
-            const createdUser = await userService.create(newUser)
-            return res.status(201).send({ data: createdUser })
+            const updatedUser = await userService.update(userId, updatedUserData)
+            if (updatedUser) {
+                return res.status(200).send(updatedUser)
+            } else {
+                return res.status(404).send({ message: "User not found" })
+            }
         } catch (error) {
-            return res.status(500).send({ error: "Error creating the user" })
+            console.log(error)
+            return res.status(500).send({ error: "Error updating the user" })
         }
-    }
-})
+    })
 
-usersController.put("/:id", async (req: Request<{ id: string }, {}, UserInterface>, res: Response) => {
-    const userService = new UserService()
-    const userId = req.params.id
-    const updatedUserData: UserInterface = req.body
+    userController.delete("/:id", async (req: Request<{ id: number }>, res: Response) => {
+        const userId = req.params.id
 
-    try {
-        const updatedUser = await userService.update(userId, updatedUserData)
-        if (updatedUser) {
-            return res.status(200).send({ data: updatedUser })
-        } else {
-            return res.status(404).send({ message: "User not found" })
+        try {
+            const successfulDelete = await userService.delete(userId)
+            if (successfulDelete) {
+                return res.status(200).send({ message: "User deleted successfully" })
+            } else {
+                return res.status(404).send({ message: "User not found" })
+            }
+
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send({ error: "Error deleting the user" })
         }
-    } catch (error) {
-        return res.status(500).send({ error: "Error updating the user" })
-    }
-})
-
-usersController.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
-    const userService = new UserService()
-    const userId = req.params.id
-
-    try {
-        const successfulDelete = await userService.delete(userId)
-        if (successfulDelete) {
-            return res.status(200).send({ message: "User deleted successfully" })
-        } else {
-            return res.status(404).send({ message: "User not found" })
-        }
-
-    } catch (error) {
-        return res.status(500).send({ error: "Error deleting the user" })
-    }
-})
+    })
+    return userController
+}

@@ -1,16 +1,22 @@
 export interface UserInterface {
+    id?: number
     username: string
-    FullName: string
-    password?: string
-    Email: string
-    Photo: string
-    EntryDate: Date
-    PositionDescription: string
-    Phone: string
-    State: string
+    fullname: string
+    password: string
+    email: string
+    photo?: string
+    entry_date: Date | string
+    position_description: string
+    phone: string
+    state: 'active' | 'inactive'
     position: string
 }
 
 export interface JwtPayload {
     username: string
+}
+
+export interface LoginInterface {
+    username: string
+    password: string
 }

@@ -1,19 +1,10 @@
 export interface BookingInterface {
-    Guest: Guest
-    OrderDate: Date
-    CheckIn: Date
-    CheckOut: Date
-    SpecialRequest: string
-    RoomType: RoomType
-    Status: string
-}
-
-export interface Guest {
-    UserId: string
-    RoomId: string
-}
-
-export interface RoomType {
-    Type: string
-    RoomNumber: string
+    id?: number
+    room_id: number
+    order_date: Date | string
+    check_in: Date | string
+    check_out: Date | string
+    special_request?: string
+    room_type: 'Single' | 'Double' | 'Suite'
+    status: 'checked-in' | 'checked-out' | 'in-progress'
 }
