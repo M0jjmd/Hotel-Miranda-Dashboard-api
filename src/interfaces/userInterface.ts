@@ -1,4 +1,5 @@
 export interface UserInterface {
+    _id?: string
     username: string
     FullName: string
     password?: string
@@ -13,4 +14,9 @@ export interface UserInterface {
 
 export interface JwtPayload {
     username: string
+}
+
+export interface LoginInterface {
+    username: string
+    password: string
 }

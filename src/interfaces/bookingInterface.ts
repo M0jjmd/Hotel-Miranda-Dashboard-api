@@ -1,4 +1,5 @@
 export interface BookingInterface {
+    _id?: string
     Guest: Guest
     OrderDate: Date
     CheckIn: Date

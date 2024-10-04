@@ -27,7 +27,12 @@ export class ContactService {
             throw new Error(`Contact with id: ${id} not found`)
         }
         contact.actions.archive = archiveStatus
-        return contact.save()
+        try {
+            return await contact.save();
+        } catch (error) {
+            console.error('Error saving contact:', error);
+            throw new Error('Failed to save updated contact.');
+        }
     }
 
     async delete(id: string): Promise<boolean> {

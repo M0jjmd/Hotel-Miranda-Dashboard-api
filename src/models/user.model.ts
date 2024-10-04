@@ -1,9 +1,10 @@
-import { Schema, Document, model, models } from 'mongoose'
+import { Schema, model, Document } from 'mongoose'
 import { UserInterface } from '../interfaces/userInterface'
 
-export interface UserDocument extends Document, UserInterface { }
-
-const UserSchema: Schema<UserDocument> = new Schema({
+export interface UserDocument extends Document, UserInterface {
+    _id: string
+}
+const UserSchema: Schema = new Schema<UserDocument>({
     username: { type: String, required: true },
     FullName: { type: String, required: true },
     password: { type: String },
@@ -16,5 +17,5 @@ const UserSchema: Schema<UserDocument> = new Schema({
     position: { type: String, required: true },
 })
 
-const User = models.User || model<UserDocument>('User', UserSchema)
+const User = model<UserDocument>('User', UserSchema)
 export default User

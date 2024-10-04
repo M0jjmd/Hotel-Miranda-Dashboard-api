@@ -1,9 +1,12 @@
 import app from './app'
 import connectDB from './src/config/db'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 dotenv.config()
-const port = process.env.PORT
+const port = process.env.PORT || 8080
+
+app.use(cors())
 
 connectDB()
     .then(() => {

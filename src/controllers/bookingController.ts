@@ -9,7 +9,7 @@ bookingsController.get("", async (req: Request, res: Response) => {
     const bookingService = new BookingService()
     try {
         const bookings = await bookingService.getAll()
-        return res.status(200).send({ data: bookings })
+        return res.status(200).send(bookings)
     } catch (error) {
         console.error('Error fetching bookings:', error)
         return res.status(500).send({ error: 'Error fetching bookings' })
@@ -20,7 +20,7 @@ bookingsController.get("/:id", async (req: Request<{ id: string }>, res: Respons
     const bookingService = new BookingService()
     try {
         const booking = await bookingService.getById(req.params.id)
-        return res.status(200).send({ data: booking })
+        return res.status(200).send(booking)
     } catch (error) {
         console.error('Error fetching booking:', error)
         return res.status(500).send({ error: 'Error fetching booking' })
@@ -33,9 +33,9 @@ bookingsController.post("", async (req: Request, res: Response) => {
 
     try {
         const createdBooking = await bookingService.create(newBooking)
-        return res.status(201).send({ data: createdBooking })
+        return res.status(201).send(createdBooking)
     } catch (error) {
-        return res.status(500).send({ error: "Error creating the room" })
+        return res.status(500).send({ error: "Error creating the booking" + error })
     }
 })
 
@@ -47,7 +47,7 @@ bookingsController.put("/:id", async (req: Request<{ id: string }, {}, BookingIn
     try {
         const updatedBooking = await bookingService.update(bookingId, updatedBookingData)
         if (updatedBooking) {
-            return res.status(200).send({ data: updatedBooking })
+            return res.status(200).send(updatedBooking)
         } else {
             return res.status(404).send({ message: "Booking not found" })
         }

@@ -9,7 +9,7 @@ roomsController.get("", async (req: Request, res: Response) => {
     const roomService = new RoomService()
     try {
         const rooms = await roomService.getAll()
-        return res.status(200).send({ data: rooms })
+        return res.status(200).send(rooms)
     } catch (error) {
         console.error('Error fetching rooms:', error)
         return res.status(500).send({ error: 'Error fetching rooms' })
@@ -20,7 +20,7 @@ roomsController.get("/:id", async (req: Request<{ id: string }>, res: Response) 
     const userService = new RoomService()
     try {
         const room = await userService.getById(req.params.id)
-        return res.status(200).send({ data: room })
+        return res.status(200).send(room)
     } catch (error) {
         console.error('Error fetching room:', error)
         return res.status(500).send({ error: 'Error fetching room' })
@@ -34,9 +34,9 @@ roomsController.post("", async (req: Request, res: Response) => {
 
     try {
         const createdRoom = await roomService.create(newRoom)
-        return res.status(201).send({ data: createdRoom })
+        return res.status(201).send(createdRoom)
     } catch (error) {
-        return res.status(500).send({ error: "Error creating the room" })
+        return res.status(500).send({ error: "Error creating the room" + error })
     }
 })
 
@@ -48,7 +48,7 @@ roomsController.put("/:id", async (req: Request<{ id: string }, {}, RoomInterfac
     try {
         const updatedRoom = await roomService.update(roomId, updatedRoomData)
         if (updatedRoom) {
-            return res.status(200).send({ data: updatedRoom })
+            return res.status(200).send(updatedRoom)
         } else {
             return res.status(404).send({ message: "Room not found" })
         }

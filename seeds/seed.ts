@@ -72,7 +72,7 @@ async function seedUsers() {
             FullName: faker.person.fullName(),
             password: faker.internet.password(),
             Email: faker.internet.email(),
-            Photo: faker.image.avatar(),
+            Photo: faker.image.url(),
             EntryDate: faker.date.past(),
             PositionDescription: faker.lorem.sentence(),
             Phone: faker.phone.number(),

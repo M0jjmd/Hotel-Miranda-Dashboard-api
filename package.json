@@ -7,7 +7,8 @@
     "start": "ts-node server.ts",
     "build": "tsc",
     "deploy": "zip -r lambda.zip .",
-    "dev": "nodemon --exec npx ts-node server.ts"
+    "dev": "nodemon --exec npx ts-node server.ts",
+    "seed": "npx ts-node seeds/seed.ts"
   },
   "keywords": [],
   "author": "",

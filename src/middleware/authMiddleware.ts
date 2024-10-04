@@ -17,13 +17,13 @@ export const authenticateTokenMiddleware = (req: Request, res: Response, next: N
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (token == null) {
-        return res.sendStatus(401)
+    if (!token) {
+        return res.status(401).json({ message: 'Token is required' })
     }
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
-            return res.sendStatus(403)
+            return res.status(403).json({ message: 'Token is invalid' })
         }
         const payload = decoded as JwtPayload
         req.user = payload
