@@ -15,6 +15,6 @@ connectDB()
         })
     })
     .catch((err) => {
-        console.error('Error connecting to MongoDB:', err)
+        console.error('Error connecting to Mysql server:', err)
         process.exit(1)
     })
