@@ -1,15 +1,15 @@
+import dotenv from "dotenv"
 import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
 import { JwtPayload } from '../interfaces/userInterface'
 import { Request, Response, NextFunction } from 'express'
+
+dotenv.config()
 
 declare module 'express-serve-static-core' {
     interface Request {
         user?: JwtPayload
     }
 }
-
-dotenv.config()
 
 const SECRET_KEY = process.env.SECRET_KEY || 'fallback_secret_key'
 
@@ -23,6 +23,7 @@ export const authenticateTokenMiddleware = (req: Request, res: Response, next: N
 
     jwt.verify(token, SECRET_KEY, (err, decoded) => {
         if (err) {
+            console.error('Token verification error:', err)
             return res.status(403).json({ message: 'Token is invalid' })
         }
         const payload = decoded as JwtPayload

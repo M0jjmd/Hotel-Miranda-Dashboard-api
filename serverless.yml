@@ -1,0 +1,23 @@
+org: m0jjmd
+app: dashboard-api
+service: dashboard-mongo-api
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-3
+  stage: production
+  timeout: 30
+  logs:
+    restApi: true
+  environment:
+    SECRET_KEY: ${env:SECRET_KEY}
+    PORT: ${env:PORT}
+    SERVER_URL: ${env:SERVER_URL}
+    NODE_ENV: lambda
+
+functions:
+  app:
+    handler: dist/lambda.handler  
+    events:
+      - http: ANY /api
+      - http: ANY /api/{proxy+}
