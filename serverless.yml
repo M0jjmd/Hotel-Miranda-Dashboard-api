@@ -10,9 +10,6 @@ provider:
   logs:
     restApi: true
   environment:
-    SECRET_KEY: ${env:SECRET_KEY}
-    PORT: ${env:PORT}
-    SERVER_URL: ${env:SERVER_URL}
     NODE_ENV: lambda
 
 functions:
