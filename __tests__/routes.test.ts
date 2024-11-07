@@ -1,5 +1,5 @@
 import request from 'supertest'
-import app from '../app'
+import app from '../src/app'
 
 describe('Rooms routes', () => {
     it('return 401 if accessing protected rooms route with no token', async () => {
