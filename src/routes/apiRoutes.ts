@@ -9,7 +9,7 @@ import { authenticateTokenMiddleware } from '../middleware/authMiddleware'
 const router = Router()
 
 router.post('/login', loginController)
-router.use('/users', authenticateTokenMiddleware, usersController)
+router.use('/users', usersController)
 router.use('/contacts', authenticateTokenMiddleware, contactsController)
 router.use('/rooms', authenticateTokenMiddleware, roomsController)
 router.use('/bookings', authenticateTokenMiddleware, bookingsController)
