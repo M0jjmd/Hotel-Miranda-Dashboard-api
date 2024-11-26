@@ -54,16 +54,20 @@ usersController.put("/:id", async (req: Request<{ id: string }, {}, UserInterfac
     const userService = new UserService()
     const userId = req.params.id
     const updatedUserData: UserInterface = req.body
-
-    try {
-        const updatedUser = await userService.update(userId, updatedUserData)
-        if (updatedUser) {
-            return res.status(200).send(updatedUser)
-        } else {
-            return res.status(404).send({ message: "User not found" })
+    if (updatedUserData.password) {
+        try {
+            const saltRounds = 10
+            const hashedPassword = await bcrypt.hash(updatedUserData.password, saltRounds)
+            updatedUserData.password = hashedPassword
+            const updatedUser = await userService.update(userId, updatedUserData)
+            if (updatedUser) {
+                return res.status(200).send(updatedUser)
+            } else {
+                return res.status(404).send({ message: "User not found" })
+            }
+        } catch (error) {
+            return res.status(500).send({ error: "Error updating the user" })
         }
-    } catch (error) {
-        return res.status(500).send({ error: "Error updating the user" })
     }
 })
 
