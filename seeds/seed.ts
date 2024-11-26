@@ -62,7 +62,7 @@ async function seedUsers() {
         EntryDate: new Date(),
         PositionDescription: 'Manager',
         Phone: '1234567890',
-        State: 'active',
+        State: 'Active',
         position: 'manager',
     })
 
@@ -76,7 +76,7 @@ async function seedUsers() {
             EntryDate: faker.date.past(),
             PositionDescription: faker.lorem.sentence(),
             Phone: faker.phone.number(),
-            State: faker.helpers.arrayElement(['active', 'inactive']),
+            State: faker.helpers.arrayElement(['Active', 'Inactive']),
             position: faker.helpers.arrayElement(['receptionist', 'manager', 'cleaner']),
         });
     }
